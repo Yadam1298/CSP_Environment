@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Environmental Protection Awareness Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* --- HERO SECTION --- */
+        .hero {
+            margin-top: 20px;
+            height: 100vh;
+            background: url('https://eha.eco/wp-content/uploads/2025/01/Eha-Blogs-2240-%C3%97-820-px-31.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            object-fit: contain;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background: #2ecc71;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #27ae60;
+            transform: scale(1.05);
+        }
+
+        /* --- CONTENT --- */
+        .content {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.797);
+            transform: scale(1.04);
+            transition: all 0.3s ease;
+            transition-duration: 1s;
+            transition-delay: 0.1s;
+        }
+
+        .card h3 {
+            color: #0c5324;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #08321a;
+            color: #d9f0de;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav.navbar {
+                flex-direction: column;
+                padding: 12px 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>EP Awareness Portal</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="survey.html">Survey</a></li>
+                    <li><a href="data.html">Data Analysis</a></li>
+                    <li><a href="tips.html">Awareness Tips</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Save Environment, Save Earth</h1>
+            <p>Join us in spreading awareness about environmental protection across rural and urban areas.</p>
+            <a href="survey.html" class="btn">Take the Survey</a>
+            <a href="data.html" class="btn">View Results</a>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="content">
+        <div class="card">
+            <h3>Project Overview</h3>
+            <p>This portal showcases our community service project — a survey on environmental protection in both rural
+                and urban areas. It displays results, tips, and actions for a greener planet.</p>
+        </div>
+        <div class="card">
+            <h3>Survey Areas</h3>
+            <p>Velvadam, Vijayawada, Muthyalampadu — 50 responses collected across rural and urban regions, analyzing
+                awareness and environmental behavior.</p>
+        </div>
+        <div class="card">
+            <h3>Get Involved</h3>
+            <p>Participate in tree drives, promote eco-friendly habits, and apply the 3R principles in daily life.
+                Together, small actions create a big difference.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        © <span id="year"></span> Environmental Protection Awareness Portal — Lakireddy Bali Reddy College of
+        Engineering
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

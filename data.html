@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Data Analysis — Environmental Protection Awareness Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.js"></script>
+    <style>
+       
+
+        /* PAGE HEADER (BANNER) */
+        .page-banner {
+            background: url('https://images.unsplash.com/photo-1581091012184-5c8afc2a05c7?q=80&w=1920&auto=format&fit=crop') no-repeat center/cover;
+            height: 35vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .page-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .banner-text {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .banner-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .banner-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* CONTENT GRID */
+        .charts-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px 50px;
+            display: grid;
+            /* Adaptive grid: 2 columns on desktop, 1 on mobile */
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--color-background-card);
+            border-radius: var(--border-radius);
+            box-shadow: 0 6px 15px var(--color-shadow-light);
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--color-shadow-hover);
+        }
+
+        .card h3 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #e0f2e0;
+            padding-bottom: 8px;
+        }
+
+        .desc {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* Chart Canvas Sizing */
+        .card canvas {
+            max-height: 300px;
+            /* Enforce consistent height for charts */
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--color-primary);
+            color: #c8e6c9;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        /* MEDIA QUERIES for responsiveness */
+        @media (max-width: 900px) {
+            nav.navbar ul {
+                gap: 15px;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav.navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 20px;
+            }
+
+            nav.navbar ul {
+                width: 100%;
+                justify-content: space-around;
+                margin-top: 8px;
+            }
+
+            .banner-text h1 {
+                font-size: 2.2rem;
+            }
+
+            body {
+                padding-top: 110px;
+                /* Adjust for stacked navbar */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>EP Awareness Portal</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="survey.html">Survey</a></li>
+                    <li><a href="data.html" class="active">Data Analysis</a></li>
+                    <li><a href="tips.html">Awareness Tips</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-banner">
+        <div class="banner-text">
+            <h1>Survey Data Analysis</h1>
+            <p>Detailed Results from 50 Participants across Rural & Urban Areas.</p>
+        </div>
+    </section>
+
+    <section class="charts-section">
+
+        <div class="card">
+            <h3>1️⃣ Gender Distribution</h3>
+            <p class="desc">A near-even split, with <strong>48% male</strong> and <strong>52% female</strong>
+                respondents ensuring balanced demographic input.</p>
+            <canvas id="genderChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>2️⃣ Area of Residence</h3>
+            <p class="desc">The survey successfully gathered input from both <strong>urban (52%)</strong> and
+                <strong>rural (48%)</strong> areas, including Velvadam, Vijayawada, and Muthyalampadu.</p>
+            <canvas id="areaChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>3️⃣ Cleanliness of Surroundings (Count out of 50)</h3>
+            <p class="desc">A strong majority (60% or 30 participants) rated their surroundings as 'Clean', while 10% (5
+                participants) mentioned they were 'Not Clean'.</p>
+            <canvas id="cleanChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>4️⃣ Most Bothersome Pollution (Count out of 50)</h3>
+            <p class="desc"><strong>Smoke from vehicles (18)</strong> was the most common concern, followed by garbage
+                on roads, mosquito breeding, and noise from construction.</p>
+            <canvas id="botherChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>5️⃣ Pollution Worst for Human Health (Count out of 50)</h3>
+            <p class="desc">An overwhelming majority (36 participants) identified <strong>"All the above"</strong> (air,
+                water, soil, sound) as the worst for health.</p>
+            <canvas id="healthChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>6️⃣ Human Activities & Climate Change</h3>
+            <p class="desc">There is <strong>100% agreement</strong> among all 50 respondents that human activities
+                contribute to climate change.</p>
+            <canvas id="climateChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>7️⃣ Top Activities Causing Climate Change (Count out of 50)</h3>
+            <p class="desc">The most cited activities were <strong>burning plastics (14)</strong>, vehicle usage (12),
+                and deforestation (10).</p>
+            <canvas id="activityChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>8️⃣ Suggested Steps to Reduce Pollution (Count out of 50)</h3>
+            <p class="desc">The top suggestions were <strong>afforestation (14)</strong> and <strong>avoiding plastic
+                    burning (14)</strong>, along with using paper bags and public transport.</p>
+            <canvas id="stepsChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>9️⃣ 3R Principle Awareness Rating (Count out of 50)</h3>
+            <p class="desc">Awareness is high: <strong>50% (25) rated it "Best"</strong>, 40% (20) rated it "Better",
+                and only 10% (5) rated it "Good".</p>
+            <canvas id="rChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>🔟 Are You Using the 3R Principle?</h3>
+            <p class="desc"><strong>45 out of 50 respondents (90%)</strong> confirmed they actively apply the 3R
+                principle, citing reuse of bottles and recycling of books/crafts.</p>
+            <canvas id="usingChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>1️⃣1️⃣ Buying Eco-Friendly Products</h3>
+            <p class="desc"><strong>80% (40) of participants</strong> reported using eco-friendly products like jute
+                bags, paper cups, wooden chairs, and stainless steel utensils.</p>
+            <canvas id="ecoChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>1️⃣2️⃣ Country Producing Most Pollution (Count out of 50)</h3>
+            <p class="desc">A large majority of participants (35) selected <strong>India</strong>, followed by China
+                (10), as the country they believe produces the most pollution.</p>
+            <canvas id="countryChart"></canvas>
+        </div>
+    </section>
+
+    <footer>
+        © <span id="year"></span> Environmental Protection Awareness Portal — Lakireddy Bali Reddy College of
+        Engineering
+    </footer>
+
+    <script>
+        // --- DATA (Raw Counts out of 50, consistent with original data) ---
+
+        // Palette for charts (modern, earthy tones)
+        const PRIMARY_COLOR = '#1e8449';
+        const ACCENT_COLORS = [
+            '#27ae60', '#58d68d', '#82e0aa', '#b9f4be', '#d4f7d4',
+            '#f4d03f', '#f5b041', '#eb984e', '#c0392b', '#8e44ad',
+            '#3498db', '#95a5a6'
+        ];
+
+        // 1 Gender (Note: Values are percentages in source description, but will be shown as a proportional chart)
+        const genderData = { labels: ['Male (48%)', 'Female (52%)'], datasets: [{ data: [48, 52], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[1]] }] };
+        // 2 Area
+        const areaData = { labels: ['Urban (52%)', 'Rural (48%)'], datasets: [{ data: [52, 48], backgroundColor: [ACCENT_COLORS[0], ACCENT_COLORS[3]] }] };
+        // 3 Cleanliness (Raw Count out of 50: 60, 30, 10 is actually 30, 15, 5 based on calculation 60% of 50 = 30)
+        const cleanData = { labels: ['Clean (30)', 'Better (15)', 'Not Clean (5)'], datasets: [{ label: 'Responses (Count)', data: [30, 15, 5], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[1], ACCENT_COLORS[5]] }] };
+        // 4 Bother
+        const botherData = { labels: ['Air/Smoke (18)', 'Garbage (12)', 'Mosquitoes (10)', 'Noise (10)'], datasets: [{ label: 'Responses (Count)', data: [18, 12, 10, 10], backgroundColor: [ACCENT_COLORS[11], ACCENT_COLORS[4], ACCENT_COLORS[8], ACCENT_COLORS[9]] }] };
+        // 5 Health
+        const healthData = { labels: ['All Above (36)', 'Air (5)', 'Water (4)', 'Soil (3)', 'Sound (2)'], datasets: [{ data: [36, 5, 4, 3, 2], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[1], ACCENT_COLORS[2], ACCENT_COLORS[3], ACCENT_COLORS[4]] }] };
+        // 6 Climate Yes
+        const climateData = { labels: ['Yes (50)', 'No (0)'], datasets: [{ data: [50, 0], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[8]] }] };
+        // 7 Activities
+        const activityData = { labels: ['Burning Plastic (14)', 'Vehicle Use (12)', 'Deforestation (10)', 'Industrial Waste (8)', 'Garbage Dumping (6)'], datasets: [{ label: 'Responses (Count)', data: [14, 12, 10, 8, 6], backgroundColor: [ACCENT_COLORS[7], ACCENT_COLORS[10], ACCENT_COLORS[8], ACCENT_COLORS[5], ACCENT_COLORS[9]] }] };
+        // 8 Steps
+        const stepsData = { labels: ['Afforestation (14)', 'Avoid Plastic (14)', 'Paper Bags (12)', 'Public Transport (10)'], datasets: [{ label: 'Responses (Count)', data: [14, 14, 12, 10], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[1], ACCENT_COLORS[3], ACCENT_COLORS[4]] }] };
+        // 9 3R Rating
+        const rData = { labels: ['Best (25)', 'Better (20)', 'Good (5)'], datasets: [{ data: [25, 20, 5], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[1], ACCENT_COLORS[2]] }] };
+        // 10 Using 3R
+        const usingData = { labels: ['Yes (45)', 'No (5)'], datasets: [{ data: [45, 5], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[8]] }] };
+        // 11 Eco Products
+        const ecoData = { labels: ['Yes (40)', 'No (10)'], datasets: [{ data: [40, 10], backgroundColor: [PRIMARY_COLOR, ACCENT_COLORS[8]] }] };
+        // 12 Country
+        const countryData = { labels: ['India (35)', 'China (10)', 'Others (5)'], datasets: [{ data: [35, 10, 5], backgroundColor: [ACCENT_COLORS[10], ACCENT_COLORS[1], ACCENT_COLORS[9]] }] };
+
+
+        // --- CHART CONFIGURATION FUNCTION (Modern Look) ---
+        const cfg = (ctx, data, type = 'pie', opts = {}) => new Chart(ctx, {
+            type,
+            data,
+            options: Object.assign({
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { family: 'Inter', size: 13, weight: '600' },
+                            // Use CSS variable in JS via utility function or hardcode for robustness
+                            color: '#2c3e50'
+                        }
+                    },
+                    tooltip: {
+                        titleFont: { family: 'Inter', size: 14, weight: '700' },
+                        bodyFont: { family: 'Inter', size: 13, weight: '600' },
+                        backgroundColor: 'rgba(30, 132, 73, 0.9)', // Primary color for tooltips
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                    }
+                },
+                layout: { padding: { top: 10 } }
+            }, opts)
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Generate Charts
+            cfg(document.getElementById('genderChart'), genderData, 'doughnut');
+            cfg(document.getElementById('areaChart'), areaData, 'pie');
+
+            // Bar chart specific options (Horizontal bars for better label reading)
+            const barOpts = {
+                indexAxis: 'y',
+                scales: {
+                    x: { beginAtZero: true, ticks: { precision: 0 } },
+                    y: { grid: { display: false } }
+                }
+            };
+            cfg(document.getElementById('cleanChart'), cleanData, 'bar', barOpts);
+            cfg(document.getElementById('botherChart'), botherData, 'bar', barOpts);
+
+            cfg(document.getElementById('healthChart'), healthData, 'pie');
+            cfg(document.getElementById('climateChart'), climateData, 'pie');
+
+            cfg(document.getElementById('activityChart'), activityData, 'bar', barOpts);
+            cfg(document.getElementById('stepsChart'), stepsData, 'bar', barOpts);
+
+            cfg(document.getElementById('rChart'), rData, 'pie');
+            cfg(document.getElementById('usingChart'), usingData, 'doughnut');
+            cfg(document.getElementById('ecoChart'), ecoData, 'pie');
+            cfg(document.getElementById('countryChart'), countryData, 'pie');
+
+            // Update Footer Year
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+
+</html>
